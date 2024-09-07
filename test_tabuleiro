@@ -1,0 +1,16 @@
+import unittest
+from Tabuleiro import Tabuleiro
+
+class TestTabuleiro(unittest.TestCase):
+    def setUp(self):
+        self.tabuleiro = Tabuleiro("Territorio1", "Exercito1", 1)
+
+    def test_escolher_turno(self):
+        # Since escolher_turno is not implemented, we will just call it to ensure it doesn't raise any exceptions
+        try:
+            self.tabuleiro.escolher_turno()
+        except Exception as e:
+            self.fail(f"escolher_turno raised an exception: {e}")
+
+if __name__ == '__main__':
+    unittest.main()
