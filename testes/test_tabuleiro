@@ -1,5 +1,5 @@
 import unittest
-from Tabuleiro import Tabuleiro
+from tabuleiro import Tabuleiro
 
 class TestTabuleiro(unittest.TestCase):
     def setUp(self):

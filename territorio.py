@@ -3,6 +3,10 @@ class Territorio:
         self.nome = nome
         self.vizinhos = []
         self.id_territorio = id_territorio
+
+    def vizinhos(self):
+        return self.vizinhos
+
     def get_nome(self):
         return self.nome
     def set_nome(self, nome):

@@ -1,4 +1,3 @@
-
 import json
 import territorio
 import exercito
@@ -8,6 +7,6 @@ class Tabuleiro:
         self.id_tabuleiro = id_tabuleiro
         self.cartas_terr = cartas_terr
         self.cartas_obj = cartas_obj
-    territorio_json = json.dumps({"nome": territorio , "exercito": exercito, "id_tabuleiro": self.id_tabuleiro})
+    territorio_json = json.dumps({"nome": territorio , "exercito": exercito})
     def informacoes_Tabuleiro(self):
         return self.territorio_json

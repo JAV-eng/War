@@ -6,10 +6,10 @@ class Exercito:
         self.quantidade = quantidade
 
     def somar_quantidade(self, valor):
-        self.quantidade = quantidade + valor
+        self.quantidade = self.quantidade + valor
     
     def subtrair_quantidade(self, valor):
-        self.quantidade = quantidade - valor
+        self.quantidade = self.quantidade - valor
     
 
 
