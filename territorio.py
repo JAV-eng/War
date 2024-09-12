@@ -2,13 +2,13 @@ class Territorio:
 
     def __init__(self, nome, vizinhos, id_territorio):
         self.nome = nome
-        self.vizinhos = vizinhos
+        self._vizinhos = vizinhos
         self.id_territorio = id_territorio
 
 
     def vizinhos(self):
 
-        return self.vizinhos
+        return self._vizinhos
     def get_nome(self):
 
         return self.nome

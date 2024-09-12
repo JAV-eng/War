@@ -22,6 +22,17 @@ class TestTerritorio(unittest.TestCase):
 
     def test_vizinhos_initially_empty(self):
         self.assertEqual(self.territorio.vizinhos(), [])
+    def test_set_vizinhos(self):
+        self.territorio._vizinhos = ["Territorio2", "Territorio3"]
+        self.assertEqual(self.territorio.vizinhos(), ["Territorio2", "Territorio3"])
 
+    def test_add_vizinho(self):
+        self.territorio._vizinhos.append("Territorio2")
+        self.assertIn("Territorio2", self.territorio.vizinhos())
+
+    def test_remove_vizinho(self):
+        self.territorio._vizinhos = ["Territorio2", "Territorio3"]
+        self.territorio._vizinhos.remove("Territorio2")
+        self.assertNotIn("Territorio2", self.territorio.vizinhos())
 if __name__ == '__main__':
     unittest.main()
