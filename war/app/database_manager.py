@@ -26,7 +26,9 @@ class Database:
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
                 nome TEXT NOT NULL UNIQUE,
                 cor_id INTEGER,
-                FOREIGN KEY (cor_id) REFERENCES cores(id)
+                objetivo_id INTEGER,
+                FOREIGN KEY (cor_id) REFERENCES cores(id),
+                FOREIGN KEY (objetivo_id) REFERENCES objetivos(id)
             )'''
         await self.execute_query(sql)
 
@@ -36,9 +38,7 @@ class Database:
             territorio TEXT, 
             simbolo INTEGER,
             jogador_id INTEGER,
-            objetivo_id INTEGER,
-            FOREIGN KEY (jogador_id) REFERENCES jogador(id),
-            FOREIGN KEY (objetivo_id) REFERENCES objetivos(id))"""
+            FOREIGN KEY (jogador_id) REFERENCES jogador(id))"""
         await self.execute_query(sql)
   
     async def criar_tabela_exercito(self):

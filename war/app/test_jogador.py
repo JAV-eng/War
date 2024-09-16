@@ -1,7 +1,7 @@
 import pytest
 from unittest.mock import AsyncMock, patch
 from jogador import Jogador
-from database_gerenciador import Database
+from database_manager import Database
 
 @pytest.mark.asyncio
 async def test_adicionar_jogador():
