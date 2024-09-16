@@ -1,0 +1,61 @@
+{
+    "objetivos": [
+      {
+        "nome": "Conquistar 24 Territórios",
+        "descricao": "Conquistar 24 territórios à sua escolha, com pelo menos um exército em cada território."
+      },
+      {
+        "nome": "Conquistar América do Norte e África",
+        "descricao": "Conquistar inteiramente os continentes América do Norte e África."
+      },
+      {
+        "nome": "Conquistar América do Sul e África",
+        "descricao": "Conquistar inteiramente os continentes América do Sul e África."
+      },
+      {
+        "nome": "Conquistar América do Norte e Oceania",
+        "descricao": "Conquistar inteiramente os continentes América do Norte e Oceania."
+      },
+      {
+        "nome": "Conquistar Ásia e América do Sul",
+        "descricao": "Conquistar inteiramente os continentes Ásia e América do Sul."
+      },
+      {
+        "nome": "Conquistar Europa, América do Sul e um terceiro continente",
+        "descricao": "Conquistar inteiramente os continentes Europa, América do Sul e mais um terceiro continente à sua escolha."
+      },
+      {
+        "nome": "Conquistar Europa e Oceania",
+        "descricao": "Conquistar inteiramente os continentes Europa e Oceania."
+      },
+      {
+        "nome": "Conquistar Ásia e África",
+        "descricao": "Conquistar inteiramente os continentes Ásia e África."
+      },
+      {
+        "nome": "Eliminar o jogador verde",
+        "descricao": "Eliminar todos os exércitos do jogador que controla o exército de cor verde. Se esse jogador já foi eliminado por outro, seu objetivo passa a ser conquistar 24 territórios."
+      },
+      {
+        "nome": "Eliminar o jogador vermelho",
+        "descricao": "Eliminar todos os exércitos do jogador que controla o exército de cor vermelha. Se esse jogador já foi eliminado por outro, seu objetivo passa a ser conquistar 24 territórios."
+      },
+      {
+        "nome": "Eliminar o jogador azul",
+        "descricao": "Eliminar todos os exércitos do jogador que controla o exército de cor azul. Se esse jogador já foi eliminado por outro, seu objetivo passa a ser conquistar 24 territórios."
+      },
+      {
+        "nome": "Eliminar o jogador amarelo",
+        "descricao": "Eliminar todos os exércitos do jogador que controla o exército de cor amarela. Se esse jogador já foi eliminado por outro, seu objetivo passa a ser conquistar 24 territórios."
+      },
+      {
+        "nome": "Eliminar o jogador preto",
+        "descricao": "Eliminar todos os exércitos do jogador que controla o exército de cor preta. Se esse jogador já foi eliminado por outro, seu objetivo passa a ser conquistar 24 territórios."
+      },
+      {
+        "nome": "Eliminar o jogador rosa",
+        "descricao": "Eliminar todos os exércitos do jogador que controla o exército de cor rosa. Se esse jogador já foi eliminado por outro, seu objetivo passa a ser conquistar 24 territórios."
+      }
+    ]
+  }
+  

@@ -3,66 +3,76 @@ import asyncio
 
 class Database:
     _instance = None
-    _lock = asyncio.Lock()
-
-    def __new__(cls, *args, **kwargs):
-        if not cls._instance:
-            cls._instance = super(Database, cls).__new__(cls, *args, **kwargs)
+    
+    @classmethod
+    async def get_instance(cls):
+        if cls._instance is None:
+            cls._instance = cls()
+            await cls._instance._init_db()
         return cls._instance
     
     def __init__(self):
-        if not hasattr(self, 'initialized'):
-            self.db_path = "Database.db"
-            self.connection = None
-            self.initialized = True
-
-    async def connect(self):
-        if not self.connection:
-            self.connection = await aiosqlite.connect(self.db_path)
-
-    async def criar_tabela_exercito(self):
-        sql = """CREATE TABLE IF NOT EXISTS exercito(
-        id INTEGER PRIMARY KEY AUTOINCREMENT,
-        cor TEXT, 
-        tipo INTEGER,
-        quantidade INTEGER,
-        jogador_id INTEGER,
-        FOREIGN KEY (jogador_id) REFERENCES jogador(id))"""
-        await self.execute_query(sql)
-
+        if not hasattr(self, 'initialized'):  # Garante que a inicialização ocorra apenas uma vez
+            self.database = None
+            self.initialized = False
+    
+    async def _init_db(self):
+        self.database = await aiosqlite.connect("./Database.db")
+        self.execute = self.database.execute
+        self.initialized = True  
+    
     async def criar_tabela_jogador(self):
         sql = '''CREATE TABLE IF NOT EXISTS jogador (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            cor TEXT,
-            objetivo TEXT
-        )'''
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                nome TEXT NOT NULL UNIQUE,
+                cor_id INTEGER,
+                FOREIGN KEY (cor_id) REFERENCES cores(id)
+            )'''
         await self.execute_query(sql)
 
     async def criar_tabela_cartas_territorio(self):
         sql = """CREATE TABLE IF NOT EXISTS cartas_territorio(
-        id INTEGER PRIMARY KEY AUTOINCREMENT,
-        territorio TEXT, 
-        simbulo INTEGER,
-        jogador_id INTEGER,
-        FOREIGN KEY (jogador_id) REFERENCES jogador(id))"""
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            territorio TEXT, 
+            simbolo INTEGER,
+            jogador_id INTEGER,
+            objetivo_id INTEGER,
+            FOREIGN KEY (jogador_id) REFERENCES jogador(id),
+            FOREIGN KEY (objetivo_id) REFERENCES objetivos(id))"""
+        await self.execute_query(sql)
+  
+    async def criar_tabela_exercito(self):
+        sql = """CREATE TABLE IF NOT EXISTS exercito(
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            cor TEXT, 
+            tipo INTEGER,
+            quantidade INTEGER,
+            jogador_id INTEGER,
+            FOREIGN KEY (jogador_id) REFERENCES jogador(id))"""
+        await self.execute_query(sql)
+    
+    async def criar_tabela_cores(self):
+        sql = """CREATE TABLE IF NOT EXISTS cores(
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            nome TEXT UNIQUE,
+            codigo_hex TEXT UNIQUE,
+            selecionado INTEGER DEFAULT 0
+            )"""
         await self.execute_query(sql)
 
-    async def criar_jogo(self):
-        await self.criar_tabela_jogador()
-        await self.criar_tabela_cartas_territorio()
-        await self.criar_tabela_exercito()
+    async def criar_tabela_objetivos(self):
+        sql = """CREATE TABLE IF NOT EXISTS objetivos(
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                nome TEXT UNIQUE,
+                descricao TEXT UNIQUE,
+                selecionado INTEGER DEFAULT 0
+            )"""
+        await self.execute_query(sql)
 
-    async def execute_query(self, query, params=None):
-        async with self.connection.cursor() as cursor:
-            if params:
-                await cursor.execute(query, params)
-            else:
-                await cursor.execute(query)
-            await self.connection.commit()
-
+    async def execute_query(self, query, parameters=()):
+        async with self.database.execute(query, parameters) as cursor:
+            await self.database.commit()
+    
     async def close(self):
-        if self.connection:
-            await self.connection.close()
-            self.connection = None
-
-
+        if self.database:
+            await self.database.close()
