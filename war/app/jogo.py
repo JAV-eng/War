@@ -14,9 +14,10 @@ class Jogo:
         async def criar():
             return await banca.criar_jogo()
         
-        @self.app.get('/numero')
-        async def numero():
-            return await banca.get_numero_jogadores()
+        @self.app.get('/get_objetivos/{nome}')
+        async def get_objetivos(nome:str):
+            return await banca.get_objetivo_jogador(nome,Jogador)
+            
         
         @self.app.get('/adicionar_jogador/{nome}')
         async def adicionar_jogador(nome: str):
@@ -31,8 +32,8 @@ class Jogo:
             
         
         @self.app.get('/sortear_objetivos')
-        async def sortear_objetivos(self):
-            pass
+        async def sortear_objetivos():
+            return await banca.atribuir_objetivos(Jogador)
         
         @self.app.get('/definir_ordem_jogadores')
         async def definir_ordem_jogadores(self):

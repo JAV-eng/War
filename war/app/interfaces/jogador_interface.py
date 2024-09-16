@@ -20,11 +20,11 @@ class JogadorInterface(ABC):
         pass
     
     @abstractmethod
-    async def set_objetivo(self):
+    async def set_objetivo(self,jogador_id,objetivo_id):
         pass
     
     @abstractmethod
-    async def get_objetivo(self):
+    async def get_objetivo(self,nome):
         pass
     
     async def adicionar_exercito(self,exercito,quantidade,territorio):

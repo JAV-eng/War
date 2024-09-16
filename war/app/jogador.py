@@ -1,6 +1,6 @@
 import asyncio
 from interfaces import JogadorInterface
-from database_gerenciador import Database
+from database_manager import Database
 
 class Jogador(JogadorInterface):
     
@@ -52,14 +52,37 @@ class Jogador(JogadorInterface):
         # Implementação necessária
         pass
     
-    async def set_objetivo(self):
-        # Implementação necessária
-        pass
-    
-    async def get_objetivo(self):
-        # Implementação necessária
-        pass
-    
+    async def set_objetivo(self, jogador_id, objetivo_id):
+        db = await Database.get_instance()
+
+        async with db.database.cursor() as cursor:
+            await cursor.execute(
+                "UPDATE jogador SET objetivo_id = ? WHERE id = ?",
+                (objetivo_id, jogador_id)
+            )
+
+        await db.database.commit()
+
+    async def get_objetivo(self,nome):
+        db = await Database.get_instance()
+        
+        query = '''
+            SELECT o.*
+            FROM objetivos o
+            JOIN jogador j ON j.objetivo_id = o.id
+            WHERE j.nome = ?
+        '''
+        
+        async with db.database.cursor() as cursor:
+            await cursor.execute(query, (nome,))
+            objetivo = await cursor.fetchone()  # Use fetchone() para obter um único resultado
+        
+        if objetivo:
+            return objetivo
+        else:
+            return "Nenhum objetivo encontrado para o jogador com o nome fornecido."
+            
+            
     async def adicionar_exercito(self, exercito, quantidade, territorio):
         # Implementação necessária
         pass
