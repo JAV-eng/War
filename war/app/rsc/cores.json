@@ -1,0 +1,29 @@
+{
+    "cores": [
+      {
+        "nome": "Vermelho",
+        "codigo_hex": "#FF0000"
+      },
+      {
+        "nome": "Azul",
+        "codigo_hex": "#0000FF"
+      },
+      {
+        "nome": "Verde",
+        "codigo_hex": "#008000"
+      },
+      {
+        "nome": "Amarelo",
+        "codigo_hex": "#FFFF00"
+      },
+      {
+        "nome": "Roxo",
+        "codigo_hex": "#800080"
+      },
+      {
+        "nome": "Laranja",
+        "codigo_hex": "#FFA500"
+      }
+    ]
+  }
+  

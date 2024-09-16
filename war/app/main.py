@@ -1,10 +1,10 @@
 from fastapi import FastAPI
-from app.banca import Banca
+from jogo import Jogo
 
 app = FastAPI()
 
 # Inicialize a aplicação com as rotas da classe Banca
-banca_instance = Banca(app)
+banca_instance = Jogo(app)
 
 if __name__ == "__main__":
     import uvicorn
