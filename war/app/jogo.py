@@ -1,6 +1,7 @@
 
 from banca import Banca
 from jogador import Jogador
+from cartas_territorio import CartasTerritorios
 
 class Jogo:
     def __init__(self, app):
@@ -41,4 +42,4 @@ class Jogo:
         
         @self.app.get('/distribuir_territorios_iniciais')
         async def distribuir_territorios_iniciais(self):
-            pass
+            return await banca.distribuir_cartas_territorio(Jogador,CartasTerritorios)

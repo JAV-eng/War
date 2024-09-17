@@ -4,12 +4,18 @@ from interfaces.jogador_interface import JogadorInterface
 from cores import CoresManager
 from cartas_objetivos import Objetivos
 from jogador_manager import JogadorManager
-
+from dado import Dado
+from cartas_territorio import CartasTerritorios
 class Banca():
     
     def __init__(self):
         self.cores = CoresManager('war/app/rsc/cores.json')
         self.objetivos = Objetivos('war/app/rsc/cartas_objetivos.json')
+        self.cartas_territorio = CartasTerritorios('war/app/rsc/cartas_territorio.json')
+        self.dado_amarelo_1 = Dado('amarelo')
+        self.dado_amarelo_2 = Dado('amarelo')
+        self.dado_vermelho_1 = Dado('vermelho')
+        self.dado_vermelho_2 = Dado('vermelho')
         
     async def criar_jogo(self):
         try:
@@ -21,6 +27,7 @@ class Banca():
             await db.criar_tabela_objetivos()
             await self.cores.inserir_cores_do_json()
             await self.objetivos.inserir_objetivos()
+            await self.cartas_territorio.inserir_cartas_territorio()
             return "Jogo iniciado com sucecesso"
         except Exception as e:
             return f"Não foi possível criar o jogo devido ao erro: {str(e)}"    
@@ -37,7 +44,42 @@ class Banca():
     
     async def get_objetivo_jogador(self,nome,jogador:JogadorInterface):
        return await jogador.get_objetivo(self,nome)
+   
+    async def distribuir_cartas_territorio(self, jogador: JogadorInterface, territorios: CartasTerritorios):
         
+        self.jogador_manager = JogadorManager(jogador, self.objetivos)
+        jogadores = await self.jogador_manager.get_jogadores()
+        cartas = await territorios.get_cartas_territorio(self)
+        numero_jogadores = await self.jogador_manager.get_numero_jogadores()
+        resultado_sorteio = await self.jogador_manager.sortear_maior_numero(self.dado_amarelo_1)
+        id_jogador_vencedor = resultado_sorteio['id_jogador_vencedor']
+        
+        
+        jogadores_ordenados = sorted(
+            jogadores,
+            key=lambda x: (x[0] - id_jogador_vencedor) % numero_jogadores
+        )
+        
+        for index, carta in enumerate(cartas):
+            jogador_atual = jogadores_ordenados[index % numero_jogadores]
+            await self.atribuir_carta_territorio(jogador_atual[0], carta[0])
+
+        return {"status": "Cartas distribuídas com sucesso"}
+
+
+   
+    async def atribuir_carta_territorio(self,  jogador_id,carta_id):
+        db = await Database.get_instance()
+        query = """
+        UPDATE cartas_territorio 
+        SET jogador_id = ?, selecionado = 1 
+        WHERE id = ? AND selecionado != 1
+        """
+        await db.execute_query(query, (jogador_id, carta_id))
+
+            
+            
+            
     
 
 

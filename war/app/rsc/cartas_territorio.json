@@ -1,0 +1,35 @@
+{
+    "cartas_territorio": [
+      { "territorio": "Alasca", "simbolo": "cavalaria" },
+      { "territorio": "Vancouver", "simbolo": "infantaria" },
+      { "territorio": "Califórnia", "simbolo": "artilharia" },
+      { "territorio": "Groelândia", "simbolo": "cavalaria" },
+      { "territorio": "México", "simbolo": "infantaria" },
+      { "territorio": "Nova York", "simbolo": "artilharia" },
+      { "territorio": "Argentina", "simbolo": "cavalaria" },
+      { "territorio": "Brasil", "simbolo": "infantaria" },
+      { "territorio": "Peru", "simbolo": "artilharia" },
+      { "territorio": "Venezuela", "simbolo": "cavalaria" },
+      { "territorio": "Inglaterra", "simbolo": "infantaria" },
+      { "territorio": "Islândia", "simbolo": "artilharia" },
+      { "territorio": "França", "simbolo": "cavalaria" },
+      { "territorio": "Alemanha", "simbolo": "infantaria" },
+      { "territorio": "Polônia", "simbolo": "artilharia" },
+      { "territorio": "Suécia", "simbolo": "cavalaria" },
+      { "territorio": "Egito", "simbolo": "infantaria" },
+      { "territorio": "África do Sul", "simbolo": "artilharia" },
+      { "territorio": "Madagascar", "simbolo": "cavalaria" },
+      { "territorio": "Líbia", "simbolo": "infantaria" },
+      { "territorio": "Congo", "simbolo": "artilharia" },
+      { "territorio": "Etiópia", "simbolo": "cavalaria" },
+      { "territorio": "Sibéria", "simbolo": "infantaria" },
+      { "territorio": "China", "simbolo": "artilharia" },
+      { "territorio": "Mongólia", "simbolo": "cavalaria" },
+      { "territorio": "Índia", "simbolo": "infantaria" },
+      { "territorio": "Japão", "simbolo": "artilharia" },
+      { "territorio": "Vietnã", "simbolo": "cavalaria" },
+      { "territorio": "Austrália", "simbolo": "infantaria" },
+      { "territorio": "Nova Zelândia", "simbolo": "artilharia" }
+    ]
+  }
+  
