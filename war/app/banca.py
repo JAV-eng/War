@@ -16,6 +16,8 @@ class Banca():
         self.dado_amarelo_2 = Dado('amarelo')
         self.dado_vermelho_1 = Dado('vermelho')
         self.dado_vermelho_2 = Dado('vermelho')
+        self.ordem_jogadores = None
+        self.ultimo_jogador_jogando = None
         
     async def criar_jogo(self):
         try:
@@ -59,14 +61,22 @@ class Banca():
             jogadores,
             key=lambda x: (x[0] - id_jogador_vencedor) % numero_jogadores
         )
-        
+        self.ordem_jogadores = jogadores_ordenados
         for index, carta in enumerate(cartas):
             jogador_atual = jogadores_ordenados[index % numero_jogadores]
             await self.atribuir_carta_territorio(jogador_atual[0], carta[0])
-
+            
+        self.ultimo_jogador_jogando = jogadores_ordenados[(index % len(jogadores))]
         return {"status": "Cartas distribuídas com sucesso"}
 
-
+    async def definir_ordem_jogadores(self):
+        if self.ordem_jogadores == None:
+            return "Por favor distribua as cartas antes de definir a ordem"
+        else:
+            posicao_ultimo = self.ordem_jogadores.index(self.ultimo_jogador_jogando)
+            jogadores_reordenados = self.ordem_jogadores[posicao_ultimo+1:] + self.ordem_jogadores[:posicao_ultimo+1]
+            self.ordem_jogadores = jogadores_reordenados
+            return self.ordem_jogadores
    
     async def atribuir_carta_territorio(self,  jogador_id,carta_id):
         db = await Database.get_instance()

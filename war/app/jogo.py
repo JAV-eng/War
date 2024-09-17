@@ -34,11 +34,11 @@ class Jogo:
         
         @self.app.get('/sortear_objetivos')
         async def sortear_objetivos():
-            return await banca.atribuir_objetivos(Jogador)
+            return await self.banca.atribuir_objetivos(Jogador)
         
         @self.app.get('/definir_ordem_jogadores')
-        async def definir_ordem_jogadores(self):
-            pass
+        async def definir_ordem_jogadores():
+            return await self.banca.definir_ordem_jogadores()
         
         @self.app.get('/distribuir_territorios_iniciais')
         async def distribuir_territorios_iniciais(self):
