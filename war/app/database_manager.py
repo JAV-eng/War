@@ -38,6 +38,7 @@ class Database:
             territorio TEXT, 
             simbolo INTEGER,
             jogador_id INTEGER,
+            selecionado INTEGER DEFAULT 0,
             FOREIGN KEY (jogador_id) REFERENCES jogador(id))"""
         await self.execute_query(sql)
   
