@@ -22,7 +22,7 @@ class Jogo:
         
         @self.app.get('/adicionar_jogador/{nome}')
         async def adicionar_jogador(nome: str):
-            jogador = Jogador(nome)  # Criar uma instância de Jogador
+            jogador = Jogador(nome) 
             result = await self.banca.adicionar_jogador(jogador)
             return {"message": result}
         
@@ -41,5 +41,10 @@ class Jogo:
             return await self.banca.definir_ordem_jogadores()
         
         @self.app.get('/distribuir_territorios_iniciais')
-        async def distribuir_territorios_iniciais(self):
-            return await banca.distribuir_cartas_territorio(Jogador,CartasTerritorios)
+        async def distribuir_territorios_iniciais():
+            return await banca.distribuir_cartas_territorio(CartasTerritorios)
+           
+        @self.app.get('/distribuir_exercitos_iniciais')
+        async def distribuir_exercitos_iniciais():
+            return await banca.atribuir_exercitos_iniciais()
+        

@@ -1,6 +1,6 @@
 import asyncio
-from interfaces import JogadorInterface
-from database_manager import Database
+from .interfaces import JogadorInterface
+from .database_manager import Database
 
 class Jogador(JogadorInterface):
     

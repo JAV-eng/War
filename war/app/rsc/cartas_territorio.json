@@ -1,35 +1,184 @@
 {
-    "cartas_territorio": [
-      { "territorio": "Alasca", "simbolo": "cavalaria" },
-      { "territorio": "Vancouver", "simbolo": "infantaria" },
-      { "territorio": "Califórnia", "simbolo": "artilharia" },
-      { "territorio": "Groelândia", "simbolo": "cavalaria" },
-      { "territorio": "México", "simbolo": "infantaria" },
-      { "territorio": "Nova York", "simbolo": "artilharia" },
-      { "territorio": "Argentina", "simbolo": "cavalaria" },
-      { "territorio": "Brasil", "simbolo": "infantaria" },
-      { "territorio": "Peru", "simbolo": "artilharia" },
-      { "territorio": "Venezuela", "simbolo": "cavalaria" },
-      { "territorio": "Inglaterra", "simbolo": "infantaria" },
-      { "territorio": "Islândia", "simbolo": "artilharia" },
-      { "territorio": "França", "simbolo": "cavalaria" },
-      { "territorio": "Alemanha", "simbolo": "infantaria" },
-      { "territorio": "Polônia", "simbolo": "artilharia" },
-      { "territorio": "Suécia", "simbolo": "cavalaria" },
-      { "territorio": "Egito", "simbolo": "infantaria" },
-      { "territorio": "África do Sul", "simbolo": "artilharia" },
-      { "territorio": "Madagascar", "simbolo": "cavalaria" },
-      { "territorio": "Líbia", "simbolo": "infantaria" },
-      { "territorio": "Congo", "simbolo": "artilharia" },
-      { "territorio": "Etiópia", "simbolo": "cavalaria" },
-      { "territorio": "Sibéria", "simbolo": "infantaria" },
-      { "territorio": "China", "simbolo": "artilharia" },
-      { "territorio": "Mongólia", "simbolo": "cavalaria" },
-      { "territorio": "Índia", "simbolo": "infantaria" },
-      { "territorio": "Japão", "simbolo": "artilharia" },
-      { "territorio": "Vietnã", "simbolo": "cavalaria" },
-      { "territorio": "Austrália", "simbolo": "infantaria" },
-      { "territorio": "Nova Zelândia", "simbolo": "artilharia" }
-    ]
-  }
-  
+  "cartas_territorio": [
+    { 
+      "territorio": "Alasca", 
+      "simbolo": "cavalaria", 
+      "continente": "América do Norte",
+      "vizinhos": ["Vancouver", "Sibéria"]
+    },
+    { 
+      "territorio": "Vancouver", 
+      "simbolo": "infantaria", 
+      "continente": "América do Norte",
+      "vizinhos": ["Alasca", "Califórnia", "Groelândia"]
+    },
+    { 
+      "territorio": "Califórnia", 
+      "simbolo": "artilharia", 
+      "continente": "América do Norte",
+      "vizinhos": ["Vancouver", "México"]
+    },
+    { 
+      "territorio": "Groelândia", 
+      "simbolo": "cavalaria", 
+      "continente": "América do Norte",
+      "vizinhos": ["Vancouver", "Islândia", "Nova York"]
+    },
+    { 
+      "territorio": "México", 
+      "simbolo": "infantaria", 
+      "continente": "América do Norte",
+      "vizinhos": ["Califórnia", "Venezuela"]
+    },
+    { 
+      "territorio": "Nova York", 
+      "simbolo": "artilharia", 
+      "continente": "América do Norte",
+      "vizinhos": ["Groelândia", "Venezuela", "Inglaterra"]
+    },
+    { 
+      "territorio": "Argentina", 
+      "simbolo": "cavalaria", 
+      "continente": "América do Sul",
+      "vizinhos": ["Brasil", "Peru"]
+    },
+    { 
+      "territorio": "Brasil", 
+      "simbolo": "infantaria", 
+      "continente": "América do Sul",
+      "vizinhos": ["Argentina", "Peru", "Venezuela"]
+    },
+    { 
+      "territorio": "Peru", 
+      "simbolo": "artilharia", 
+      "continente": "América do Sul",
+      "vizinhos": ["Argentina", "Brasil", "Venezuela"]
+    },
+    { 
+      "territorio": "Venezuela", 
+      "simbolo": "cavalaria", 
+      "continente": "América do Sul",
+      "vizinhos": ["México", "Nova York", "Peru", "Brasil"]
+    },
+    { 
+      "territorio": "Inglaterra", 
+      "simbolo": "infantaria", 
+      "continente": "Europa",
+      "vizinhos": ["Nova York", "Islândia", "França"]
+    },
+    { 
+      "territorio": "Islândia", 
+      "simbolo": "artilharia", 
+      "continente": "Europa",
+      "vizinhos": ["Groelândia", "Inglaterra", "Suécia"]
+    },
+    { 
+      "territorio": "França", 
+      "simbolo": "cavalaria", 
+      "continente": "Europa",
+      "vizinhos": ["Inglaterra", "Alemanha", "Polônia"]
+    },
+    { 
+      "territorio": "Alemanha", 
+      "simbolo": "infantaria", 
+      "continente": "Europa",
+      "vizinhos": ["França", "Polônia"]
+    },
+    { 
+      "territorio": "Polônia", 
+      "simbolo": "artilharia", 
+      "continente": "Europa",
+      "vizinhos": ["França", "Alemanha", "Suécia"]
+    },
+    { 
+      "territorio": "Suécia", 
+      "simbolo": "cavalaria", 
+      "continente": "Europa",
+      "vizinhos": ["Islândia", "Polônia"]
+    },
+    { 
+      "territorio": "Egito", 
+      "simbolo": "infantaria", 
+      "continente": "África",
+      "vizinhos": ["Líbia", "Congo"]
+    },
+    { 
+      "territorio": "África do Sul", 
+      "simbolo": "artilharia", 
+      "continente": "África",
+      "vizinhos": ["Congo", "Madagascar"]
+    },
+    { 
+      "territorio": "Madagascar", 
+      "simbolo": "cavalaria", 
+      "continente": "África",
+      "vizinhos": ["África do Sul"]
+    },
+    { 
+      "territorio": "Líbia", 
+      "simbolo": "infantaria", 
+      "continente": "África",
+      "vizinhos": ["Egito", "Congo"]
+    },
+    { 
+      "territorio": "Congo", 
+      "simbolo": "artilharia", 
+      "continente": "África",
+      "vizinhos": ["Líbia", "Egito", "África do Sul", "Etiópia"]
+    },
+    { 
+      "territorio": "Etiópia", 
+      "simbolo": "cavalaria", 
+      "continente": "África",
+      "vizinhos": ["Congo"]
+    },
+    { 
+      "territorio": "Sibéria", 
+      "simbolo": "infantaria", 
+      "continente": "Ásia",
+      "vizinhos": ["Alasca", "China", "Mongólia"]
+    },
+    { 
+      "territorio": "China", 
+      "simbolo": "artilharia", 
+      "continente": "Ásia",
+      "vizinhos": ["Sibéria", "Mongólia", "Índia", "Vietnã"]
+    },
+    { 
+      "territorio": "Mongólia", 
+      "simbolo": "cavalaria", 
+      "continente": "Ásia",
+      "vizinhos": ["Sibéria", "China", "Japão"]
+    },
+    { 
+      "territorio": "Índia", 
+      "simbolo": "infantaria", 
+      "continente": "Ásia",
+      "vizinhos": ["China", "Vietnã"]
+    },
+    { 
+      "territorio": "Japão", 
+      "simbolo": "artilharia", 
+      "continente": "Ásia",
+      "vizinhos": ["Mongólia"]
+    },
+    { 
+      "territorio": "Vietnã", 
+      "simbolo": "cavalaria", 
+      "continente": "Ásia",
+      "vizinhos": ["China", "Índia"]
+    },
+    { 
+      "territorio": "Austrália", 
+      "simbolo": "infantaria", 
+      "continente": "Oceania",
+      "vizinhos": ["Nova Zelândia"]
+    },
+    { 
+      "territorio": "Nova Zelândia", 
+      "simbolo": "artilharia", 
+      "continente": "Oceania",
+      "vizinhos": ["Austrália"]
+    }
+  ]
+}

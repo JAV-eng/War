@@ -3,9 +3,8 @@ from cartas_objetivos import Objetivos
 from interfaces import JogadorInterface
 
 class JogadorManager:
-    def __init__(self,Jogador:JogadorInterface,Objetivos):
-        self.Objetivos = Objetivos
-        self.Jogador = Jogador
+    def __init__(self):
+        pass
 
     async def get_numero_jogadores(self):
         db = await Database.get_instance()
@@ -17,15 +16,26 @@ class JogadorManager:
     async def get_jogadores(self):
         db = await Database.get_instance()
         async with db.database.cursor() as cursor:
-            await cursor.execute("SELECT id, nome FROM jogador")
+            await cursor.execute("SELECT id, nome ,cor_id FROM jogador")
             jogadores = await cursor.fetchall()
         await db.database.commit()
         return jogadores
     
-    async def atribuir_objetivos(self):
+    async def get_exercitos(self, jogador_id):
+        db = await Database.get_instance()
+        async with db.database.cursor() as cursor:
+            await cursor.execute("SELECT * FROM exercito WHERE jogador_id = ?", (jogador_id,))
+            exercitos = await cursor.fetchall()
+        return exercitos
+
+            
+        
+    
+    async def atribuir_objetivos(self,Objetivos,Jogador:JogadorInterface):
         
         db = await Database.get_instance()
-        Objetivo = self.Objetivos
+        Objetivo = Objetivos
+        Jogador = Jogador
         
         await self.limpar_atribuicoes()
         
@@ -40,8 +50,8 @@ class JogadorManager:
             for jogador, objetivo in zip(jogadores, objetivos_selecionados):
                 jogador_id = jogador[0]
                 objetivo_id = objetivo[0]
-                await self.Jogador.set_objetivo(self,jogador_id,objetivo_id)
-                await self.Objetivos.set_selecionado(objetivo_id)
+                await Jogador.set_objetivo(self,jogador_id,objetivo_id)
+                await Objetivos.set_selecionado(objetivo_id)
                 
         await db.database.commit()
         return "Objetivos atribuídos com sucesso!"

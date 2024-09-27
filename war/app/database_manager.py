@@ -12,7 +12,7 @@ class Database:
         return cls._instance
     
     def __init__(self):
-        if not hasattr(self, 'initialized'):  # Garante que a inicialização ocorra apenas uma vez
+        if not hasattr(self, 'initialized'):  
             self.database = None
             self.initialized = False
     
@@ -68,6 +68,18 @@ class Database:
                 descricao TEXT UNIQUE,
                 selecionado INTEGER DEFAULT 0
             )"""
+        await self.execute_query(sql)
+    async def criar_tabela_tabuleiro(self):
+        sql = """
+            CREATE TABLE IF NOT EXISTS tabuleiro(
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                territorio TEXT,
+                continente TEXT,
+                territorios_vizinhos TEXT,
+                exercitos_id INTEGER,
+                FOREIGN KEY (exercitos_id) REFERENCES exercito(id)
+            )
+        """
         await self.execute_query(sql)
 
     async def execute_query(self, query, parameters=()):

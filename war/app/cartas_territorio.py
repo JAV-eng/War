@@ -1,5 +1,5 @@
 import json
-from database_manager import Database
+from .database_manager import Database
 
 class CartasTerritorios():
     def __init__(self,path):
@@ -23,4 +23,16 @@ class CartasTerritorios():
         async with db.execute(sql) as cursor:
             self.cartas_territorios_id = await cursor.fetchall()
         return self.cartas_territorios_id
+    
+    async def get_cartas_territorio_jogador(self, jogador_id):
+        db = await Database.get_instance()
+        sql = """
+            SELECT id 
+            FROM cartas_territorio 
+            WHERE jogador_id = ?
+        """
+        async with db.database.execute(sql, (jogador_id,)) as cursor:
+            self.cartas_territorios_id = await cursor.fetchall()
+        return self.cartas_territorios_id
+
         

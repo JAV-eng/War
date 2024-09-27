@@ -1,17 +1,20 @@
 import asyncio
-from database_manager import Database
-from interfaces.jogador_interface import JogadorInterface
-from cores import CoresManager
-from cartas_objetivos import Objetivos
-from jogador_manager import JogadorManager
-from dado import Dado
-from cartas_territorio import CartasTerritorios
+from .database_manager import Database
+from .interfaces.jogador_interface import JogadorInterface
+from .cores import CoresManager
+from .cartas_objetivos import Objetivos
+from .jogador_manager import JogadorManager
+from .dado import Dado
+from .cartas_territorio import CartasTerritorios
+from .tabuleiro import Tabuleiro
+from .exercito import Exercitos
 class Banca():
     
     def __init__(self):
         self.cores = CoresManager('war/app/rsc/cores.json')
         self.objetivos = Objetivos('war/app/rsc/cartas_objetivos.json')
         self.cartas_territorio = CartasTerritorios('war/app/rsc/cartas_territorio.json')
+        self.tabuleiro = Tabuleiro('war/app/rsc/cartas_territorio.json')
         self.dado_amarelo_1 = Dado('amarelo')
         self.dado_amarelo_2 = Dado('amarelo')
         self.dado_vermelho_1 = Dado('vermelho')
@@ -27,9 +30,11 @@ class Banca():
             await db.criar_tabela_cartas_territorio()
             await db.criar_tabela_exercito()
             await db.criar_tabela_objetivos()
+            await db.criar_tabela_tabuleiro()
             await self.cores.inserir_cores_do_json()
             await self.objetivos.inserir_objetivos()
             await self.cartas_territorio.inserir_cartas_territorio()
+            await self.tabuleiro.carregar_territorios()
             return "Jogo iniciado com sucecesso"
         except Exception as e:
             return f"Não foi possível criar o jogo devido ao erro: {str(e)}"    
@@ -41,15 +46,15 @@ class Banca():
         return await jogador.escolher_cor_exercito(nome,cor)
     
     async def atribuir_objetivos(self,jogador:JogadorInterface):
-        self.jogador_manager = JogadorManager(jogador,self.objetivos)
-        await self.jogador_manager.atribuir_objetivos()
+        self.jogador_manager = JogadorManager()
+        await self.jogador_manager.atribuir_objetivos(jogador, self.objetivos)
     
     async def get_objetivo_jogador(self,nome,jogador:JogadorInterface):
        return await jogador.get_objetivo(self,nome)
    
-    async def distribuir_cartas_territorio(self, jogador: JogadorInterface, territorios: CartasTerritorios):
+    async def distribuir_cartas_territorio(self, territorios: CartasTerritorios):
         
-        self.jogador_manager = JogadorManager(jogador, self.objetivos)
+        self.jogador_manager = JogadorManager()
         jogadores = await self.jogador_manager.get_jogadores()
         cartas = await territorios.get_cartas_territorio(self)
         numero_jogadores = await self.jogador_manager.get_numero_jogadores()
@@ -86,10 +91,27 @@ class Banca():
         WHERE id = ? AND selecionado != 1
         """
         await db.execute_query(query, (jogador_id, carta_id))
-
-            
-            
-            
-    
+        
+    async def atribuir_exercitos_iniciais(self):
+        jogador_manager = JogadorManager()
+        jogadores = await jogador_manager.get_jogadores()
+        exercito = Exercitos()
+        await exercito.limpar_exercitos()
+        for jogador_id, jogador_nome ,jogador_cor in jogadores:
+            territorios_jogador = await self.cartas_territorio.get_cartas_territorio_jogador(jogador_id)
+            for territorio in territorios_jogador:
+                await exercito.adicionar_exercito(jogador_cor,1,1,jogador_id)
+                
+    async def adicionar_exercitos_iniciais_aos_territorios(self):
+        jogador_manager = JogadorManager()
+        jogadores = await jogador_manager.get_jogadores()
+        exercito = Exercitos()
+        await exercito.limpar_exercitos()
+        for jogador_id,jogador_cor in jogadores:
+            territorios_jogador = await self.cartas_territorio.get_cartas_territorio_jogador(jogador_id)
+            exercitos_jogador = await jogador_manager.get_exercitos(jogador_id)
+            for territorio in territorios_jogador:
+                await self.tabuleiro.adicionar_exercito_territorio(territorio,exercito_id)
+        
 
 
