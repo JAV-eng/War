@@ -47,7 +47,7 @@ class Banca():
     
     async def atribuir_objetivos(self,jogador:JogadorInterface):
         self.jogador_manager = JogadorManager()
-        await self.jogador_manager.atribuir_objetivos(jogador, self.objetivos)
+        await self.jogador_manager.atribuir_objetivos(self.objetivos,jogador)
     
     async def get_objetivo_jogador(self,nome,jogador:JogadorInterface):
        return await jogador.get_objetivo(self,nome)
@@ -101,17 +101,24 @@ class Banca():
             territorios_jogador = await self.cartas_territorio.get_cartas_territorio_jogador(jogador_id)
             for territorio in territorios_jogador:
                 await exercito.adicionar_exercito(jogador_cor,1,1,jogador_id)
+      
+      
+      
+      
+      
+      
+      
                 
     async def adicionar_exercitos_iniciais_aos_territorios(self):
         jogador_manager = JogadorManager()
         jogadores = await jogador_manager.get_jogadores()
         exercito = Exercitos()
-        await exercito.limpar_exercitos()
-        for jogador_id,jogador_cor in jogadores:
+        for jogador_id, jogador_nome ,jogador_cor in jogadores:
             territorios_jogador = await self.cartas_territorio.get_cartas_territorio_jogador(jogador_id)
             exercitos_jogador = await jogador_manager.get_exercitos(jogador_id)
             for territorio in territorios_jogador:
-                await self.tabuleiro.adicionar_exercito_territorio(territorio,exercito_id)
+                for exercito_id in exercitos_jogador:
+                    await self.tabuleiro.adicionar_exercito_territorio(territorio,exercito_id)
         
 
 

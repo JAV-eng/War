@@ -1,5 +1,5 @@
 import json
-from database_manager import Database
+from .database_manager import Database
 
 class Objetivos():
     def __init__(self,path):

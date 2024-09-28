@@ -1,6 +1,6 @@
-from database_manager import Database
-from cartas_objetivos import Objetivos
-from interfaces import JogadorInterface
+from .database_manager import Database
+from .cartas_objetivos import Objetivos
+from .interfaces import JogadorInterface
 
 class JogadorManager:
     def __init__(self):

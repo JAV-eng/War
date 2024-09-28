@@ -1,4 +1,4 @@
-from database_manager import Database
+from .database_manager import Database
 class Exercitos():
     
     def __init__(self) -> None:

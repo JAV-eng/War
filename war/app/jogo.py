@@ -1,7 +1,7 @@
 
-from banca import Banca
-from jogador import Jogador
-from cartas_territorio import CartasTerritorios
+from .banca import Banca
+from .jogador import Jogador
+from .cartas_territorio import CartasTerritorios
 
 class Jogo:
     def __init__(self, app):
@@ -46,5 +46,10 @@ class Jogo:
            
         @self.app.get('/distribuir_exercitos_iniciais')
         async def distribuir_exercitos_iniciais():
-            return await banca.atribuir_exercitos_iniciais()
+            try:
+                await banca.atribuir_exercitos_iniciais()
+                await banca.adicionar_exercitos_iniciais_aos_territorios()
+                return 'atribuido com sucesso'
+            except Exception as e:
+                return f"O erro {e} aconteceu "
         
