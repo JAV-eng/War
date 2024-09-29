@@ -1,38 +1,28 @@
 import json
 from .database_manager import Database
 
-class CartasTerritorios():
-    def __init__(self,path):
+class CartasTerritorios:
+    def __init__(self, path, repository):
         self.path = path
+        self.repository = repository
         with open(self.path, 'r') as file:
             self.data = json.load(file)
         self.cartas_territorios = self.data['cartas_territorio']
-        
+
     async def inserir_cartas_territorio(self):
         db = await Database.get_instance()
-        cartas_territorio = self.cartas_territorios
-        for carta_territorio in cartas_territorio:
-            territorio = carta_territorio['territorio']
-            simbolo = carta_territorio['simbolo']
-            query = """INSERT OR IGNORE INTO cartas_territorio (territorio, simbolo, selecionado) VALUES (?, ?, 0)"""
-            await db.execute_query(query, (territorio, simbolo))
-            
-    async def get_cartas_territorio(self):
+        await self.repository.inserir_cartas(db, self.cartas_territorios)
+
+    async def selecionar_cartas_territorio(self, quantidade):
         db = await Database.get_instance()
-        sql = f"""SELECT id FROM cartas_territorio ORDER BY RANDOM()"""
-        async with db.execute(sql) as cursor:
-            self.cartas_territorios_id = await cursor.fetchall()
-        return self.cartas_territorios_id
-    
+        return await self.repository.selecionar_cartas(db, quantidade)
+
     async def get_cartas_territorio_jogador(self, jogador_id):
         db = await Database.get_instance()
         sql = """
-            SELECT id 
+            SELECT *
             FROM cartas_territorio 
             WHERE jogador_id = ?
         """
         async with db.database.execute(sql, (jogador_id,)) as cursor:
-            self.cartas_territorios_id = await cursor.fetchall()
-        return self.cartas_territorios_id
-
-        
+            return await cursor.fetchall()

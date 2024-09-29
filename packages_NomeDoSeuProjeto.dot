@@ -1,0 +1,53 @@
+digraph "packages_NomeDoSeuProjeto" {
+rankdir=BT
+charset="utf-8"
+"war.app" [color="black", label=<war.app>, shape="box", style="solid"];
+"war.app.banca" [color="black", label=<war.app.banca>, shape="box", style="solid"];
+"war.app.cartas_objetivos" [color="black", label=<war.app.cartas_objetivos>, shape="box", style="solid"];
+"war.app.cartas_repository" [color="black", label=<war.app.cartas_repository>, shape="box", style="solid"];
+"war.app.cartas_statagy" [color="black", label=<war.app.cartas_statagy>, shape="box", style="solid"];
+"war.app.cartas_territorio" [color="black", label=<war.app.cartas_territorio>, shape="box", style="solid"];
+"war.app.cores" [color="black", label=<war.app.cores>, shape="box", style="solid"];
+"war.app.dado" [color="black", label=<war.app.dado>, shape="box", style="solid"];
+"war.app.database_manager" [color="black", label=<war.app.database_manager>, shape="box", style="solid"];
+"war.app.exercito" [color="black", label=<war.app.exercito>, shape="box", style="solid"];
+"war.app.interfaces" [color="black", label=<war.app.interfaces>, shape="box", style="solid"];
+"war.app.interfaces.banca_interface" [color="black", label=<war.app.interfaces.banca_interface>, shape="box", style="solid"];
+"war.app.interfaces.cartas_interface" [color="black", label=<war.app.interfaces.cartas_interface>, shape="box", style="solid"];
+"war.app.interfaces.dados_interface" [color="black", label=<war.app.interfaces.dados_interface>, shape="box", style="solid"];
+"war.app.interfaces.exercito_interface" [color="black", label=<war.app.interfaces.exercito_interface>, shape="box", style="solid"];
+"war.app.interfaces.jogador_interface" [color="black", label=<war.app.interfaces.jogador_interface>, shape="box", style="solid"];
+"war.app.interfaces.tabuleiro_interface" [color="black", label=<war.app.interfaces.tabuleiro_interface>, shape="box", style="solid"];
+"war.app.interfaces.territorio_interface" [color="black", label=<war.app.interfaces.territorio_interface>, shape="box", style="solid"];
+"war.app.jogador" [color="black", label=<war.app.jogador>, shape="box", style="solid"];
+"war.app.jogador_manager" [color="black", label=<war.app.jogador_manager>, shape="box", style="solid"];
+"war.app.jogo" [color="black", label=<war.app.jogo>, shape="box", style="solid"];
+"war.app.main" [color="black", label=<war.app.main>, shape="box", style="solid"];
+"war.app.tabuleiro" [color="black", label=<war.app.tabuleiro>, shape="box", style="solid"];
+"war.app" -> "war.app.database_manager" [arrowhead="open", arrowtail="none"];
+"war.app.banca" -> "war.app.cartas_objetivos" [arrowhead="open", arrowtail="none"];
+"war.app.banca" -> "war.app.cartas_territorio" [arrowhead="open", arrowtail="none"];
+"war.app.banca" -> "war.app.cores" [arrowhead="open", arrowtail="none"];
+"war.app.banca" -> "war.app.dado" [arrowhead="open", arrowtail="none"];
+"war.app.banca" -> "war.app.database_manager" [arrowhead="open", arrowtail="none"];
+"war.app.banca" -> "war.app.exercito" [arrowhead="open", arrowtail="none"];
+"war.app.banca" -> "war.app.interfaces.jogador_interface" [arrowhead="open", arrowtail="none"];
+"war.app.banca" -> "war.app.jogador_manager" [arrowhead="open", arrowtail="none"];
+"war.app.banca" -> "war.app.tabuleiro" [arrowhead="open", arrowtail="none"];
+"war.app.cartas_objetivos" -> "war.app.database_manager" [arrowhead="open", arrowtail="none"];
+"war.app.cartas_territorio" -> "war.app.database_manager" [arrowhead="open", arrowtail="none"];
+"war.app.cores" -> "war.app.database_manager" [arrowhead="open", arrowtail="none"];
+"war.app.exercito" -> "war.app.database_manager" [arrowhead="open", arrowtail="none"];
+"war.app.interfaces" -> "war.app.interfaces.jogador_interface" [arrowhead="open", arrowtail="none"];
+"war.app.interfaces.banca_interface" -> "war.app.interfaces.jogador_interface" [arrowhead="open", arrowtail="none"];
+"war.app.jogador" -> "war.app.database_manager" [arrowhead="open", arrowtail="none"];
+"war.app.jogador" -> "war.app.interfaces" [arrowhead="open", arrowtail="none"];
+"war.app.jogador_manager" -> "war.app.cartas_objetivos" [arrowhead="open", arrowtail="none"];
+"war.app.jogador_manager" -> "war.app.database_manager" [arrowhead="open", arrowtail="none"];
+"war.app.jogador_manager" -> "war.app.interfaces" [arrowhead="open", arrowtail="none"];
+"war.app.jogo" -> "war.app.banca" [arrowhead="open", arrowtail="none"];
+"war.app.jogo" -> "war.app.cartas_territorio" [arrowhead="open", arrowtail="none"];
+"war.app.jogo" -> "war.app.jogador" [arrowhead="open", arrowtail="none"];
+"war.app.main" -> "war.app.jogo" [arrowhead="open", arrowtail="none"];
+"war.app.tabuleiro" -> "war.app.database_manager" [arrowhead="open", arrowtail="none"];
+}

@@ -1,60 +1,79 @@
 import pytest
 import json
 from unittest.mock import patch, mock_open, AsyncMock
-from war.app.cores import CoresManager
+from war.app.database_manager import InsertStrategy, SelectStrategy  # Ajuste o nome do módulo conforme necessário
 from war.app.database_manager import Database
-
-mock_json_data = json.dumps({
-    "cores": [
-        {"nome": "Azul", "codigo_hex": "#0000FF"},
-        {"nome": "Vermelho", "codigo_hex": "#FF0000"},
-    ]
-})
+# Mock data for the tests
+mock_cartas_data = json.dumps([
+    {"territorio": "Territorio1", "simbolo": 1, "jogador_id": 1},
+    {"territorio": "Territorio2", "simbolo": 2, "jogador_id": 2}
+])
 
 @pytest.fixture
-def mock_open_file():
-    with patch("builtins.open", mock_open(read_data=mock_json_data)) as mock_file:
+def mock_open_cartas_file():
+    with patch("builtins.open", mock_open(read_data=mock_cartas_data)) as mock_file:
         yield mock_file
 
-
 @pytest.mark.asyncio
-async def test_inserir_cores_do_json_sucesso(mock_open_file):
+async def test_inserir_cartas_sucesso(mock_open_cartas_file):
     with patch.object(Database, 'get_instance', return_value=AsyncMock()) as mock_db:
         mock_db.return_value.execute_query = AsyncMock()
 
-        cores_manager = CoresManager('path/to/mock/file.json')
+        insert_strategy = InsertStrategy()
+        
+        # Simulando a leitura das cartas do JSON
+        cartas = json.loads(mock_cartas_data)
 
-        await cores_manager.inserir_cores_do_json()
+        await insert_strategy.inserir(mock_db, "cartas_territorio", cartas)
 
-        mock_db.return_value.execute_query.assert_any_call(
-            """INSERT OR IGNORE INTO cores (nome, codigo_hex, selecionado) VALUES (?, ?, 0)""",
-            ("Azul", "#0000FF")
-        )
-        mock_db.return_value.execute_query.assert_any_call(
-            """INSERT OR IGNORE INTO cores (nome, codigo_hex, selecionado) VALUES (?, ?, 0)""",
-            ("Vermelho", "#FF0000")
-        )
+        expected_query = """INSERT OR IGNORE INTO cartas_territorio (territorio, simbolo, jogador_id, selecionado) VALUES (?, ?, ?, 0)"""
+        
+        # Verificamos se a função execute_query foi chamada com os valores corretos
+        mock_db.return_value.execute_query.assert_any_call(expected_query, ("Territorio1", 1, 1))
+        mock_db.return_value.execute_query.assert_any_call(expected_query, ("Territorio2", 2, 2))
 
         assert mock_db.return_value.execute_query.call_count == 2
 
-
 @pytest.mark.asyncio
-async def test_inserir_cores_do_json_arquivo_vazio():
-    empty_json = json.dumps({"cores": []})
+async def test_inserir_cartas_arquivo_vazio():
+    empty_json = json.dumps([])
     
     with patch("builtins.open", mock_open(read_data=empty_json)):
         with patch.object(Database, 'get_instance', return_value=AsyncMock()) as mock_db:
             mock_db.return_value.execute_query = AsyncMock()
 
-            cores_manager = CoresManager('path/to/mock/file.json')
+            insert_strategy = InsertStrategy()
 
-            await cores_manager.inserir_cores_do_json()
+            await insert_strategy.inserir(mock_db, "cartas_territorio", [])
 
+            # Verifica se a função execute_query não foi chamada
             mock_db.return_value.execute_query.assert_not_called()
 
+@pytest.mark.asyncio
+async def test_selecionar_cartas_sucesso():
+    with patch.object(Database, 'get_instance', return_value=AsyncMock()) as mock_db:
+        mock_db.return_value.execute = AsyncMock()
+        mock_db.return_value.execute.return_value.__aenter__.return_value.fetchall.return_value = [
+            {"territorio": "Territorio1", "simbolo": 1, "jogador_id": 1, "selecionado": 0},
+            {"territorio": "Territorio2", "simbolo": 2, "jogador_id": 2, "selecionado": 0}
+        ]
+        
+        select_strategy = SelectStrategy()
+        resultado = await select_strategy.selecionar(mock_db, "cartas_territorio", 2)
+
+        # Verifica se o resultado contém as cartas esperadas
+        assert len(resultado) == 2
+        assert resultado[0]["territorio"] == "Territorio1"
+        assert resultado[1]["territorio"] == "Territorio2"
 
 @pytest.mark.asyncio
-async def test_inserir_cores_do_json_erro_leitura():
-    with patch("builtins.open", side_effect=FileNotFoundError):
-        with pytest.raises(FileNotFoundError):
-            cores_manager = CoresManager('path/to/invalid/file.json')
+async def test_selecionar_cartas_sem_resultados():
+    with patch.object(Database, 'get_instance', return_value=AsyncMock()) as mock_db:
+        mock_db.return_value.execute = AsyncMock()
+        mock_db.return_value.execute.return_value.__aenter__.return_value.fetchall.return_value = []
+
+        select_strategy = SelectStrategy()
+        resultado = await select_strategy.selecionar(mock_db, "cartas_territorio", 2)
+
+        # Verifica se o resultado é uma lista vazia
+        assert len(resultado) == 0

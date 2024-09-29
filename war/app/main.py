@@ -1,6 +1,7 @@
 from fastapi import FastAPI
 from war.app.jogo import Jogo
 
+
 app = FastAPI()
 
 

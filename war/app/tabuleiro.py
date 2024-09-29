@@ -33,6 +33,15 @@ class Tabuleiro:
             WHERE territorio = ?
         """
         await db.execute_query(query, (id_exercito, territorio))
+        
+    async def remover_exercito_territorio(self, territorio):
+        db = await Database.get_instance()
+        query = """
+            UPDATE tabuleiro
+            SET exercitos_id = ''
+            WHERE territorio = ?
+        """
+        await db.execute_query(query, (territorio))
 
     async def get_territorios(self):
         db = await Database.get_instance()

@@ -37,6 +37,8 @@ class Database:
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             territorio TEXT, 
             simbolo INTEGER,
+            continente TEXT,
+            vizinhos TEXT,
             jogador_id INTEGER,
             selecionado INTEGER DEFAULT 0,
             FOREIGN KEY (jogador_id) REFERENCES jogador(id))"""

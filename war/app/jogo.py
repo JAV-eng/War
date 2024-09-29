@@ -1,12 +1,12 @@
 
-from .banca import Banca
+from .interfaces.banca_interface import BancaInterface
 from .jogador import Jogador
 from .cartas_territorio import CartasTerritorios
 
 class Jogo:
     def __init__(self, app):
         self.app = app
-        self.banca = Banca()
+        self.banca = BancaInterface()
         self.setup_routes(self.banca)
 
     def setup_routes(self,banca):
@@ -52,4 +52,7 @@ class Jogo:
                 return 'atribuido com sucesso'
             except Exception as e:
                 return f"O erro {e} aconteceu "
-        
+        @self.app.get('/test')
+        async def numero(jogador_id):
+            a = await self.banca.get_numero_territorio(jogador_id)
+            return 'ok'

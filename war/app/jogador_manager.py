@@ -27,10 +27,23 @@ class JogadorManager:
             await cursor.execute("SELECT * FROM exercito WHERE jogador_id = ?", (jogador_id,))
             exercitos = await cursor.fetchall()
         return exercitos
-
-            
-        
     
+    async def get_numero_territorios(self, jogador_id):
+        db = await Database.get_instance()
+        query = """
+            SELECT COUNT(DISTINCT t.territorio) AS total_territorios
+            FROM tabuleiro t
+            WHERE t.exercitos_id IN (
+                SELECT e.id
+                FROM exercito e
+                WHERE e.jogador_id = ?
+            )
+        """
+        async with db.database.execute(query, (jogador_id,)) as cursor:
+            numero_territorios = await cursor.fetchone()
+        
+        return numero_territorios[0] if numero_territorios else 0
+
     async def atribuir_objetivos(self,Objetivos,Jogador:JogadorInterface):
         
         db = await Database.get_instance()

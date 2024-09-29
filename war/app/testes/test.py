@@ -1,1 +1,0 @@
-from war.app.cores import CoresManager

@@ -8,12 +8,14 @@ from .dado import Dado
 from .cartas_territorio import CartasTerritorios
 from .tabuleiro import Tabuleiro
 from .exercito import Exercitos
-class Banca():
+from .cartas_factory import CartasFactory
+from .interfaces.banca_interface import BancaInterface
+class Banca(BancaInterface):
     
     def __init__(self):
         self.cores = CoresManager('war/app/rsc/cores.json')
-        self.objetivos = Objetivos('war/app/rsc/cartas_objetivos.json')
-        self.cartas_territorio = CartasTerritorios('war/app/rsc/cartas_territorio.json')
+        self.objetivos = CartasFactory.create_objetivos('war/app/rsc/cartas_objetivos.json')
+        self.cartas_territorio = CartasFactory.create_cartas_territorios('war/app/rsc/cartas_territorio.json')
         self.tabuleiro = Tabuleiro('war/app/rsc/cartas_territorio.json')
         self.dado_amarelo_1 = Dado('amarelo')
         self.dado_amarelo_2 = Dado('amarelo')
@@ -101,24 +103,20 @@ class Banca():
             territorios_jogador = await self.cartas_territorio.get_cartas_territorio_jogador(jogador_id)
             for territorio in territorios_jogador:
                 await exercito.adicionar_exercito(jogador_cor,1,1,jogador_id)
-      
-      
-      
-      
-      
-      
-      
-                
+           
     async def adicionar_exercitos_iniciais_aos_territorios(self):
         jogador_manager = JogadorManager()
+        
         jogadores = await jogador_manager.get_jogadores()
         exercito = Exercitos()
         for jogador_id, jogador_nome ,jogador_cor in jogadores:
+            
             territorios_jogador = await self.cartas_territorio.get_cartas_territorio_jogador(jogador_id)
             exercitos_jogador = await jogador_manager.get_exercitos(jogador_id)
-            for territorio in territorios_jogador:
-                for exercito_id in exercitos_jogador:
-                    await self.tabuleiro.adicionar_exercito_territorio(territorio,exercito_id)
-        
+            for territorio, exercito_id in zip(territorios_jogador, exercitos_jogador):
+                await self.tabuleiro.adicionar_exercito_territorio(territorio[1], exercito_id[0])
 
 
+    async def get_numero_territorio(self,jogador_id):
+        jogador_manager =JogadorManager()
+        n= await jogador_manager.get_numero_territorios(jogador_id)
